@@ -1,0 +1,1 @@
+# pos_check_stock
