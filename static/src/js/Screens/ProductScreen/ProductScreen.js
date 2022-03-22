@@ -108,6 +108,8 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
                 }
 
               });
+          }else{
+              return self.showScreen('PaymentScreen');
           }
 
 
