@@ -87,27 +87,29 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
           console.log('dicc_prod_lotes');
           console.log(dicc_prod_lotes);
+          if (dicc_prod_lotes){
+              rpc.query({
+                  model: 'pos.order',
+                  method: 'prevalidar_pedido',
+                  args: [[],dicc_prod_lotes,dicc_lineas_producto],
+              })
+              .then(function (respuesta){
+                if (respuesta.length >0){
+                  Gui.showPopup('ConfirmPopup', {
+                    title: self.env._t(respuesta[0]),
+                    body:respuesta[1],
+                  }).then(({ confirmed }) => {
 
-          rpc.query({
-              model: 'pos.order',
-              method: 'prevalidar_pedido',
-              args: [[],dicc_prod_lotes,dicc_lineas_producto],
-          })
-          .then(function (respuesta){
-            if (respuesta.length >0){
-              Gui.showPopup('ConfirmPopup', {
-                title: self.env._t(respuesta[0]),
-                body:respuesta[1],
-              }).then(({ confirmed }) => {
+                      console.log("Linea 103");
 
-                  console.log("Linea 103");
+                  });
+                }else{
+                  return self.showScreen('PaymentScreen');
+                }
 
               });
-            }else{
-              return self.showScreen('PaymentScreen');
-            }
+          }
 
-          });
 
         }
 
