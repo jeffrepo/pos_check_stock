@@ -87,7 +87,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
           console.log('dicc_prod_lotes');
           console.log(dicc_prod_lotes);
-          if (dicc_prod_lotes){
+          if (dicc_prod_lotes.length > 0){
               rpc.query({
                   model: 'pos.order',
                   method: 'prevalidar_pedido',
