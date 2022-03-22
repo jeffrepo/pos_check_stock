@@ -16,7 +16,7 @@ class PosOrder(models.Model):
         lote_id = False
         logging.warning("Lote_id")
         logging.warning(lote_id)
-        if producto_id  and producto.route_ids and len(producto.route_ids) == 1 and tipo_ubicacion_id:
+        if producto_id and tipo_ubicacion_id:
             if lote:
                 lote_id = self.env['stock.production.lot'].search([('name','=',lote),('product_id','=',producto_id.id)])
                 if lote_id:
