@@ -41,7 +41,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
           order.get_orderlines().forEach(function(prod){
 
-            if (prod.has_product_lot == true && prod.pack_lot_lines.length > 0 && prod.sale_order_line_id.length == 0 ) {
+            if (prod.has_product_lot == true && prod.pack_lot_lines.length > 0 && prod.sale_order_line_id == 0 ) {
               var id_lote = prod.product.id +"-"+ prod.pack_lot_lines.models[0]['changed']['lot_name'];
               if (!(id_lote in dicc_prod_lotes)) {
                 dicc_prod_lotes[id_lote]=0
@@ -67,7 +67,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
               }
             }
 
-            if (prod.product.id in dicc_lineas_producto && prod.sale_order_line_id.length == 'undefined') {
+            if (prod.product.id in dicc_lineas_producto && prod.sale_order_line_id == 'undefined') {
               dicc_lineas_producto[prod.product.id]['product_quantity'] += prod.quantity;
               dicc_lineas_producto[prod.product.id]['has_product_lot'] = prod.has_product_lot;
               dicc_lineas_producto[prod.product.id]['pack_lot_lines_lenght'] = prod.pack_lot_lines.length;
