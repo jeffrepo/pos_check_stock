@@ -29,7 +29,7 @@ class PosOrder(models.Model):
                 quant = self.env['stock.quant'].search([('product_id','=',producto_id.id),('location_id','=',tipo_ubicacion_id.default_location_src_id.id)])
                 if quant:
                     cantidad_producto = quant.quantity - quant.reserved_quantity
-        return cantidad_producto
+        return {'cantidad_producto': cantidad_producto, 'producto': producto_id}
 
     def prevalidar_pedido(self, dicc_prod_lotes, dicc_lineas_producto):
         lista_errores = [];
@@ -54,7 +54,7 @@ class PosOrder(models.Model):
                         lista_errores.append(n_nombre_lote)
                     else:
                         inventario_producto = self.obtener_inventario_producto(id, dicc_lineas_producto[id]['product_pos_config_picking_type_id[0]'], n_nombre_lote)
-                        if inventario_producto:
+                        if inventario_producto['cantidad_producto'] and len(inventario_producto['producto'].route_ids) != 2:
                             lot_prod_id = id +'-'+dicc_lineas_producto[id]['product_pack_lot_lines_models[0][changed][lot_name]']
                             if (lot_prod_id in dicc_prod_lotes):
                                 if (dicc_prod_lotes[lot_prod_id] > inventario_producto):
@@ -64,7 +64,7 @@ class PosOrder(models.Model):
             else:
                 if dicc_lineas_producto[id]['product_type'] == 'product':
                     inventario_producto2 = self.obtener_inventario_producto(id, dicc_lineas_producto[id]['product_pos_config_picking_type_id[0]'], False)
-                    if dicc_lineas_producto[id]['product_quantity'] >inventario_producto2 :
+                    if dicc_lineas_producto[id]['product_quantity'] >inventario_producto2['cantidad_producto'] and len(inventario_producto2['producto'].route_ids) != 2:
                         if len(lista_errores) ==0:
                             lista_errores.append('NO HAY EXISTENCIA DE PRODUCTO')
                             lista_errores.append(dicc_lineas_producto[id]['product_display_name']+': '+str(inventario_producto2))
