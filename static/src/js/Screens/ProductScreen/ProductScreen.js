@@ -41,7 +41,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
           order.get_orderlines().forEach(function(prod){
 
-            if (prod.has_product_lot == true && prod.pack_lot_lines.length > 0 && prod.sale_order_line_id == 0 ) {
+            if (prod.has_product_lot == true && prod.pack_lot_lines.length > 0 && prod.sale_order_line_id == 'undefined' ) {
               var id_lote = prod.product.id +"-"+ prod.pack_lot_lines.models[0]['changed']['lot_name'];
               if (!(id_lote in dicc_prod_lotes)) {
                 dicc_prod_lotes[id_lote]=0
@@ -87,7 +87,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
           console.log('dicc_prod_lotes');
           console.log(dicc_prod_lotes);
-          if (dicc_prod_lotes.length > 0){
+          if (dicc_prod_lotes.length > 0 || dicc_lineas_producto.length > 0){
               rpc.query({
                   model: 'pos.order',
                   method: 'prevalidar_pedido',
