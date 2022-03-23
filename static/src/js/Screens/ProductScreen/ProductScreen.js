@@ -53,7 +53,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
 
             }
 
-            if(!(prod.product.id in dicc_lineas_producto && prod.sale_order_line_id == 'undefined')){
+            if(!(prod.product.id in dicc_lineas_producto)){
               dicc_lineas_producto[prod.product.id]={
                 'product_id': prod.product.id,
                 'product_display_name':prod.product.display_name,
