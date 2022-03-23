@@ -67,7 +67,7 @@ odoo.define('pos_check_stock.ProductScreen', function(require) {
               }
             }
 
-            if (prod.product.id in dicc_lineas_producto && prod.sale_order_line_id == 'undefined') {
+            if (prod.product.id in dicc_lineas_producto) {
               dicc_lineas_producto[prod.product.id]['product_quantity'] += prod.quantity;
               dicc_lineas_producto[prod.product.id]['has_product_lot'] = prod.has_product_lot;
               dicc_lineas_producto[prod.product.id]['pack_lot_lines_lenght'] = prod.pack_lot_lines.length;
